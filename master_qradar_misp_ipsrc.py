@@ -6,11 +6,22 @@ import pymisp
 import json
 requests.packages.urllib3.disable_warnings()
 
-url_pull = 'https://<misp_fqdn>/attributes/restSearch/json'
-headers_pull = {'Authorization': '<misp_token>', 'Content-Type': 'application/json', 'Accept': 'application/json'}
+###########################
+
+misp_fqdn = "FQDN of your MISP instance"
+misp_token = "your API token of MISP"
+qradar_fqdn = "FQDN of your QRadar instance"
+qradar_token = "your Security Token of your Qradar instance"
+reference_set_name = "referenceSet Name" 
+
+########################################################################
+
+
+url_pull = 'https://'+misp_fqdn+'/attributes/restSearch/json'
+headers_pull = {'Authorization': misp_token , 'Content-Type': 'application/json', 'Accept': 'application/json'}
 data_pull = {"request": {"type": "ip-src", "category": "Network activity", "last": "1d", "enforceWarnlinglist": "True"}}
-url_push = 'https://<qradar_fqdn>/api/reference_data/sets/bulk_load/<reference_set_name>'
-headers_push = {'SEC': '<token>', 'Content-Type': 'application/json', 'Version': '9.0', 'Accept': 'application/json'}
+url_push = 'https://'+qradar_fqdn+'/api/reference_data/sets/bulk_load/'+reference_set_name
+headers_push = {'SEC': qradar_token , 'Content-Type': 'application/json', 'Version': '9.0', 'Accept': 'application/json'}
 
 # Pull the list of attributes from TIA-REPO
 r = requests.post(url_pull, headers=headers_pull, json=data_pull, verify=False)

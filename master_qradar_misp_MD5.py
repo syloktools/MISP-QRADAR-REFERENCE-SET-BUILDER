@@ -33,7 +33,7 @@ number_of_IOCs = str(len(iocs))
 
 print("IOCs extracted from JSON...pushing to QRadar...")
 
-#Push list to Q-radar
+#Push list to QRadar
 p = requests.post(url_push, headers=headers_push, json=iocs, verify=False)
 p.raise_for_status() #Raise exception on HTTP errors
 print('Push complete, pushed ' + number_of_IOCs + ' IOCs to QRadar!')
